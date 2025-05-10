@@ -13,7 +13,6 @@ navCompose = "2.8.7"
 roomRuntime = "2.6.1"
 datastorePreferences = "1.1.4"
 mediationTestSuite = "3.0.0"
-storage = "1.5.0"
 
 
 [libraries]
@@ -39,7 +38,6 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime"}
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences"}
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
-androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
