@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">ExpensesTracker_Assessment2</string>
+        <string name="add">Tambah</string>
+        <string name="edit">Edit</string>
+        <string name="delete">Hapus</string>
+        <string name="restore">Pulihkan</string>
+        <string name="permanent_delete">Hapus Permanen</string>
+        <string name="category">Kategori</string>
+        <string name="amount">Jumlah</string>
+        <string name="description">Deskripsi</string>
+        <string name="date">Tanggal</string>
+    <string name="simpan">simpan\n</string>
+    <string name="nominal_invalid">Nominal Tidak Valid</string>
+    <string name="kembali">kembali\n</string>
+    <string name="tambah_pengeluaran">tambah pengeluaran\n</string>
+    <string name="edit_pengeluaran">edit pengeluaran\n</string>
+    <string name="invalid">tidak valid</string>
+    <string name="list_kosong">kosong</string>
+    <string name="grid">grid</string>
+    <string name="list">list</string>
+    <string name="nominal_pengeluaran">pengeluaran hari ini</string>
+    <string name="isi_dulu">pengeluaran buat apasih ini?</string>
+    <string name="pesan_hapus">hapus epng\n</string>
+    <string name="tombol_hapus">hapus</string>
+    <string name="tombol_batal">batalkan</string>
 </resources>
