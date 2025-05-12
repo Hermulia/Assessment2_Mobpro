@@ -1,43 +1,18 @@
 package com.anjelitahp0044.expensestracker_assessment2.screen
 
 import android.widget.Toast
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -90,7 +65,7 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.kembali),
-                            tint = Color(0xFF6A1B9A)
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 },
@@ -100,28 +75,32 @@ fun DetailScreen(
                             stringResource(R.string.tambah_pengeluaran)
                         else
                             stringResource(R.string.edit_pengeluaran),
-                        color = Color(0xFF6A1B9A)
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color(0xFFE1BEE7),
-                    titleContentColor = Color(0xFF6A1B9A),
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
                 actions = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(end = 8.dp)
                     ) {
-                        Text("🌞 / 🌙")
+                        Text("🌞 / 🌙", color = MaterialTheme.colorScheme.onPrimaryContainer)
                         Switch(
                             checked = isDarkTheme.value,
-                            onCheckedChange = { isDarkTheme.value = it }
+                            onCheckedChange = { isDarkTheme.value = it },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                uncheckedThumbColor = MaterialTheme.colorScheme.secondary
+                            )
                         )
                     }
 
                     IconButton(onClick = {
-                        if (deskripsi.isBlank() || deskripsi.isBlank() || kategori.isBlank()) {
-                            Toast.makeText(context, R.string.isi_dulu, Toast.LENGTH_LONG).show()
+                        if (deskripsi.isBlank() || nominal.isBlank() || kategori.isBlank()) {
+                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
                             return@IconButton
                         }
                         if (id == null) {
@@ -134,7 +113,7 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.simpan),
-                            tint = Color(0xFF6A1B9A)
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
 
@@ -173,7 +152,13 @@ fun DetailScreen(
 
 @Composable
 fun DeleteAction(content: () -> Unit) {
-
+    IconButton(onClick = content) {
+        Icon(
+            imageVector = Icons.Outlined.Delete,
+            contentDescription = "Hapus",
+            tint = MaterialTheme.colorScheme.error
+        )
+    }
 }
 
 @Composable
@@ -186,13 +171,18 @@ fun FormCatatanGabungan(
     onKategoriChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val moodOptions = listOf("Senang", "Sedih", "Kesal", "Marah")
+    val kategoriOptions = listOf(
+        "🍝MAKAN", "🚗TRANSPORTASI", "🏠TEMPAT TINGGAL",
+        "💳TAGIHAN & UTILITAS", "💊KESEHATAN", "📚PENDIDIKAN",
+        "🎇HIBURAN", "💶DONASI/ZAKAT", "💹TABUNGAN & INVESTASI", "⁉️LAINNYA"
+    )
     val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
@@ -200,38 +190,50 @@ fun FormCatatanGabungan(
             onValueChange = onDeskripsiChange,
             label = { Text(text = stringResource(R.string.description)) },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                cursorColor = MaterialTheme.colorScheme.primary
+            )
         )
 
-        Text(text = stringResource(R.string.nominal_pengeluaran),
-            color = Color(0xFF6A1B9A),
-            style = MaterialTheme.typography.titleMedium)
+        OutlinedTextField(
+            value = nominal,
+            onValueChange = onNominalChange,
+            label = { Text(text = stringResource(R.string.isi_dulu)) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                cursorColor = MaterialTheme.colorScheme.primary
+            )
+        )
 
-        Row(
-            modifier = Modifier
-                .verticalScroll(scrollState)
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            moodOptions.forEach { kategori ->
+        Text(
+            text = stringResource(R.string.nominal_pengeluaran),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            kategoriOptions.forEach { kategoriOption ->
                 Button(
-                    onClick = { onKategoriChange(kategori) },
+                    onClick = { onKategoriChange(kategoriOption) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (kategori == kategori) Color(0xFFFFB6C1) else Color(0xFFFCE4EC)
+                        containerColor = if (kategori == kategoriOption)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
-                    shape = RoundedCornerShape(50),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = kategori)
+                    Text(text = kategoriOption)
                 }
             }
         }
-
-        OutlinedTextField(
-            value = deskripsi,
-            onValueChange = onDeskripsiChange,
-            label = { Text(text = stringResource(R.string.isi_dulu)) },
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
