@@ -1,7 +1,6 @@
 package com.anjelitahp0044.expensestracker_assessment2.screen
 
 import android.content.res.Configuration
-import android.graphics.pdf.models.ListItem
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -22,7 +21,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -31,7 +29,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Switch
@@ -39,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -65,7 +63,6 @@ import com.anjelitahp0044.expensestracker_assessment2.model.Pengeluaran
 import com.anjelitahp0044.expensestracker_assessment2.navigation.Screen
 import com.anjelitahp0044.expensestracker_assessment2.ui.theme.ExpensesTracker_Assessment2Theme
 import com.anjelitahp0044.expensestracker_assessment2.util.SettingsDataStore
-import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,7 +71,7 @@ import kotlinx.coroutines.launch
 fun MainScreen(navController: NavHostController, isDarkTheme: MutableState<Boolean>) {
     val context = LocalContext.current
     val db = PengeluaranDb.getInstance(context)
-    val factory = ViewModelFactory(db.dao)
+    val factory = com.anjelitahp0044.expensestracker_assessment2.util.ViewModelFactory(db.dao)
     val viewModel: MainViewModel = viewModel(factory =factory)
     val snackbarHostState = remember { SnackbarHostState() }
     var itemToDelete by remember { mutableStateOf<Pengeluaran?>(null) }
@@ -420,7 +417,7 @@ fun MainScreen(navController: NavHostController, isDarkTheme: MutableState<Boole
                         contentPadding = PaddingValues(bottom = 84.dp)
                     ) {
                         items(data) {
-                            ListItem(catatan = it, onClick = {
+                            ListItem(pengeluaran = it, onClick = {
                                 navController.navigate(Screen.FormUbah.withId(it.id))
                             }, onDelete = {
                                 onDelete(it)
@@ -437,7 +434,7 @@ fun MainScreen(navController: NavHostController, isDarkTheme: MutableState<Boole
                         contentPadding = PaddingValues(12.dp, 12.dp, 12.dp, 100.dp)
                     ) {
                         items(data) {
-                            GridItem(catatan = it, onClick = {
+                            GridItem(pengeluaran = it, onClick = {
                                 navController.navigate(Screen.FormUbah.withId(it.id))
                             }, onDelete = {
                                 onDelete(it)
