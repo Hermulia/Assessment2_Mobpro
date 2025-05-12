@@ -18,7 +18,7 @@ fun AboutScreen(navController: NavHostController, isDarkTheme: MutableState<Bool
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("🗿Tentang Aplikasi") },
+                title = { Text("🗿About This App") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Kembali")
