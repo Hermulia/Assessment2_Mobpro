@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Check
@@ -45,162 +46,8 @@ import androidx.navigation.NavHostController
 import com.anjelitahp0044.expensestracker_assessment2.R
 import com.anjelitahp0044.expensestracker_assessment2.database.PengeluaranDb
 import com.anjelitahp0044.expensestracker_assessment2.model.Pengeluaran
-import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
 
 const val KEY_ID_PENGELUARAN = "idPengeluaran"
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun DetailScreen(navController: NavHostController, id: Long? = null) {
-//    val context = LocalContext.current
-//    val factory = ViewModelFactory(context)
-//    val viewModel: DetailViewModel = viewModel(factory = factory)
-//
-//    var deskripsi by remember { mutableStateOf("") }
-//    var nominal by remember { mutableStateOf("") }
-//    var kategori by remember { mutableStateOf("") }
-//    var tanggal by remember { mutableStateOf("") }
-//
-//    LaunchedEffect(Unit) {
-//        if (id == null) return@LaunchedEffect
-//        val data = viewModel.getPengeluaran(id) ?: return@LaunchedEffect
-//        deskripsi = data.deskripsi
-//        nominal = data.nominal.toString()
-//        kategori = data.kategori
-//        tanggal = data.tanggal
-//    }
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = stringResource(R.string.kembali),
-//                            tint = MaterialTheme.colorScheme.primary
-//                        )
-//                    }
-//                },
-//                title = {
-//                    Text(
-//                        text = if (id == null)
-//                            stringResource(id = R.string.tambah_pengeluaran)
-//                        else
-//                            stringResource(id = R.string.edit_pengeluaran)
-//                    )
-//                },
-//                colors = TopAppBarDefaults.mediumTopAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-//                    titleContentColor = MaterialTheme.colorScheme.primary,
-//                ),
-//                actions = {
-//                    IconButton(onClick = {
-//                        if (deskripsi.isBlank() || nominal.isBlank() || kategori.isBlank() || tanggal.isBlank()) {
-//                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
-//                            return@IconButton
-//                        }
-//                        val nominalDouble = nominal.toDoubleOrNull()
-//                        if (nominalDouble == null) {
-//                            Toast.makeText(context, R.string.nominal_invalid, Toast.LENGTH_LONG).show()
-//                            return@IconButton
-//                        }
-//
-//                        if (id == null) {
-//                            viewModel.insert(deskripsi, nominalDouble, kategori, tanggal)
-//                        } else {
-//                            viewModel.update(id, deskripsi, nominalDouble, kategori, tanggal)
-//                        }
-//                        navController.popBackStack()
-//                    }) {
-//                        Icon(
-//                            imageVector = Icons.Outlined.Check,
-//                            contentDescription = stringResource(R.string.simpan),
-//                            tint = MaterialTheme.colorScheme.primary
-//                        )
-//                    }
-//                    if (id != null) {
-//                        DeleteAction {
-//                            viewModel.softDelete(id)
-//                            navController.popBackStack()
-//                        }
-//                    }
-//                }
-//            )
-//        }
-//    ) { padding ->
-//        FormPengeluaran(
-//            deskripsi = deskripsi,
-//            onDeskripsiChange = { deskripsi = it },
-//            nominal = nominal,
-//            onNominalChange = { nominal = it },
-//            kategori = kategori,
-//            onKategoriChange = { kategori = it },
-//            tanggal = tanggal,
-//            onTanggalChange = { tanggal = it },
-//            modifier = Modifier.padding(padding)
-//        )
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
-//@Composable
-//fun DetailScreenPreview() {
-//    ExpensesTracker_Assessment2Theme {
-//        DetailScreen(rememberNavController())
-//    }
-//}
-//
-//@Composable
-//fun FormPengeluaran(
-//    deskripsi: String,
-//    onDeskripsiChange: (String) -> Unit,
-//    nominal: String,
-//    onNominalChange: (String) -> Unit,
-//    kategori: String,
-//    onKategoriChange: (String) -> Unit,
-//    tanggal: String,
-//    onTanggalChange: (String) -> Unit,
-//    modifier: Modifier
-//) {
-//    Column(
-//        modifier = modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//        verticalArrangement = Arrangement.spacedBy(16.dp)
-//    ) {
-//        OutlinedTextField(
-//            value = deskripsi,
-//            onValueChange = onDeskripsiChange,
-//            label = { Text("Deskripsi") },
-//            singleLine = true,
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        OutlinedTextField(
-//            value = nominal,
-//            onValueChange = onNominalChange,
-//            label = { Text("Nominal") },
-//            singleLine = true,
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        OutlinedTextField(
-//            value = kategori,
-//            onValueChange = onKategoriChange,
-//            label = { Text("Kategori") },
-//            singleLine = true,
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        OutlinedTextField(
-//            value = tanggal,
-//            onValueChange = onTanggalChange,
-//            label = { Text("Tanggal") },
-//            singleLine = true,
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//    }
-//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -211,11 +58,11 @@ fun DetailScreen(
 ) {
     val context = LocalContext.current
     val db = PengeluaranDb.getInstance(context)
-    val factory = ViewModelFactory(db.dao)
+    val factory = com.anjelitahp0044.expensestracker_assessment2.util.ViewModelFactory(db.dao)
     val viewModel: DetailViewModel = viewModel(factory = factory)
 
     val snackbarHostState = remember { SnackbarHostState() }
-    var itemToDelete by remember { mutableStateOf<Pengeluaran?>(false) }
+    var itemToDelete by remember { mutableStateOf<Pengeluaran?>(null) }
 
     var deskripsi by remember { mutableStateOf("") }
     var nominal by remember { mutableStateOf("") }
@@ -315,7 +162,7 @@ fun DetailScreen(
                 onDismissRequest = { showDialog = false }) {
                 showDialog = false
                 pengeluaran?.let {
-                    itemToDelete = Pengeluaran(id = id, deskripsi = deskripsi, nominal = kategori, tanggal = it.tanggal)
+                    itemToDelete = Pengeluaran(id = id, deskripsi = deskripsi, nominal = nominal, kategori = kategori, tanggal = it.tanggal)
                 }
                 viewModel.delete(id)
                 navController.popBackStack()
@@ -323,11 +170,17 @@ fun DetailScreen(
         }
     }
 }
+
+@Composable
+fun DeleteAction(content: () -> Unit) {
+
+}
+
 @Composable
 fun FormCatatanGabungan(
     deskripsi: String,
     onDeskripsiChange: (String) -> Unit,
-    nominal: Double,
+    nominal: String,
     onNominalChange: (String) -> Unit,
     kategori: String,
     onKategoriChange: (String) -> Unit,
@@ -356,7 +209,7 @@ fun FormCatatanGabungan(
 
         Row(
             modifier = Modifier
-                .horizontalScroll(scrollState)
+                .verticalScroll(scrollState)
                 .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
