@@ -15,7 +15,7 @@ class DetailViewModel(private val dao: PengeluaranDao) : ViewModel() {
 
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
-    fun insert(deskripsi: String, nominal: Double, kategori: String) {
+    fun insert(deskripsi: String, nominal: String, kategori: String) {
         val pengeluaran = Pengeluaran(
             deskripsi = deskripsi,
             nominal = nominal.toString(),
@@ -29,7 +29,7 @@ class DetailViewModel(private val dao: PengeluaranDao) : ViewModel() {
 
     suspend fun getPengeluaran(id: Long): Pengeluaran? = dao.getPengeluaranById(id)
 
-    fun update(id: Long, deskripsi: String, nominal: Double, kategori: String) {
+    fun update(id: Long, deskripsi: String, nominal: String, kategori: String) {
         val pengeluaran = Pengeluaran(
             id = id,
             deskripsi = deskripsi,
