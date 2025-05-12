@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.anjelitahp0044.expensestracker_assessment2.screen.AboutScreen
 import com.anjelitahp0044.expensestracker_assessment2.screen.DetailScreen
 import com.anjelitahp0044.expensestracker_assessment2.screen.KEY_ID_PENGELUARAN
 import com.anjelitahp0044.expensestracker_assessment2.screen.MainScreen
@@ -27,7 +28,7 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController(), is
             DetailScreen(navController = navController, isDarkTheme = isDarkTheme)
         }
         composable(route = Screen.RecycleBin.route) {
-            RecycleBinScreen(navController)
+            RecycleBinScreen(navController, isDarkTheme = isDarkTheme)
         }
 
         composable(
@@ -39,7 +40,11 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController(), is
             val id = navBackStackEntry.arguments?.getLong(KEY_ID_PENGELUARAN)
             DetailScreen(navController = navController, id = id, isDarkTheme = isDarkTheme)
         }
-
-
+        composable(route = Screen.About.route) {
+            AboutScreen(
+                navController = navController,
+                isDarkTheme = isDarkTheme
+            )
+        }
     }
 }
