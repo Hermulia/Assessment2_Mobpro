@@ -1,3 +1,5 @@
+package com.anjelitahp0044.expensestracker_assessment2.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
 // Light Theme

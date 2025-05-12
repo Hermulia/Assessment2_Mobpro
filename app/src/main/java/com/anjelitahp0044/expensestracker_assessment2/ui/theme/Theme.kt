@@ -1,21 +1,5 @@
 package com.anjelitahp0044.expensestracker_assessment2.ui.theme
 
-import DeepPlumGray
-import DeepPlumGrayDark
-import DustyPink
-import DustyPinkDark
-import DustyRose
-import DustyRoseDark
-import LavenderDark
-import LightLavender
-import MauveBrown
-import MauveBrownDark
-import OrangeDarkSnackbar
-import OrangeSnackbar
-import PeachCream
-import PeachCreamDark
-import SoftIndigo
-import SoftIndigoDark
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

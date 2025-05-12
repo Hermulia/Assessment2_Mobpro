@@ -38,7 +38,7 @@ fun RecycleBinScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Recycle Bin",
+                        "🗑️Recycle Bin",
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 },

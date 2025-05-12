@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Expenses Tracker💸</string>
+    <string name="app_name">💸💲Expenses Tracker</string>
         <string name="add">Tambah</string>
         <string name="edit">Edit</string>
         <string name="delete">Hapus</string>
@@ -12,7 +12,7 @@
     <string name="simpan">simpan\n</string>
     <string name="nominal_invalid">Nominal Tidak Valid</string>
     <string name="kembali">kembali\n</string>
-    <string name="tambah_pengeluaran">Input Pengeluaran</string>
+    <string name="tambah_pengeluaran">🥶Input Pengeluaran</string>
     <string name="edit_pengeluaran">Ubah Pengeluaran</string>
     <string name="invalid">Isi dulu dong, masa kosong gitu aja😫</string>
     <string name="list_kosong">kosong</string>
