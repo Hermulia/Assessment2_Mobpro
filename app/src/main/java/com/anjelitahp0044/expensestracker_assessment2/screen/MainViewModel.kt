@@ -12,14 +12,14 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MainViewModel(dao: PengeluaranDao) : ViewModel() {
+class MainViewModel(private val dao: PengeluaranDao) : ViewModel() {
 
     val data: StateFlow<List<Pengeluaran>> = dao.getPengeluaran().stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(9000L),
+        started = SharingStarted.WhileSubscribed(5000L),
         initialValue = emptyList()
-
     )
+
     fun restore(id: Long) {
         viewModelScope.launch {
             dao.restoreById(id)
@@ -33,4 +33,3 @@ class MainViewModel(dao: PengeluaranDao) : ViewModel() {
         }
     }
 }
-
